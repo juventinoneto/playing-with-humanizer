@@ -12,6 +12,8 @@ OutputSpacesAndDashes();
 
 OutputEnumNames();
 
+NumberFormating();
+
 static void ConfigureConsole(string culture = "en-US")
 {
     var encoding = System.Text.Encoding.UTF8;
@@ -53,3 +55,35 @@ static void OutputEnumNames()
     WriteLine("Truncated to 8 characters: {0}", favoriteAncientWonder.ToString().Truncate(length: 8));
     WriteLine("Kebaberized: {0}", favoriteAncientWonder.ToString().Kebaberize());
 }
+
+static void NumberFormating()
+{
+    int number = 123;
+    WriteLine($"Original number: {number}");
+    WriteLine($"Roman: {number.ToRoman()}");
+    WriteLine($"Words: {number.ToWords()}");
+    WriteLine($"Ordinal words: {number.ToOrdinalWords()}");
+    WriteLine();
+    string[] things = [ "fox", "sheep", "person", "apple", "goose", "oasis", "potato", "die", "dwarf", "attorney general", "biceps" ];
+
+    for (int i = 0; i < 3; i ++)
+    {
+        for (int j = 0; j  < things.Length; j ++)
+        {
+            WriteLine(things[j].ToQuantity(i, ShowQuantityAs.Words));
+            if (j < things.Length - 1)
+            {
+                Write(", ");
+            }            
+        }
+        WriteLine();
+    }
+    WriteLine();
+
+    int thousands = 12345;
+    int millions = 123456789;
+    WriteLine("Original: {0}, Metric: About {1}", thousands, thousands.ToMetric(decimals: 0));
+    WriteLine("Original: {0}, Metric: {1}", thousands, thousands.ToMetric(MetricNumeralFormats.WithSpace | MetricNumeralFormats.UseShortScaleWord, decimals: 0));
+    WriteLine("Original: {0}, Metric: {1}", millions, millions.ToMetric(decimals: 1));
+}
+
